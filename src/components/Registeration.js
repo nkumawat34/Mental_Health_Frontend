@@ -12,7 +12,7 @@ export default function Registeration() {
         e.preventDefault(); // Prevent default form submission
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/register', {
+      const response = await axios.post('https://mental-health-backend-j16e.onrender.com/api/auth/register', {
         username: name,
         password: password,
         email: email
