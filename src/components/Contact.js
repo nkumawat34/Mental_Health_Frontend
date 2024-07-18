@@ -14,7 +14,7 @@ const Contact = () => {
   const upload = async () => {
     try {
       setIsLoading(true); // Set loading state to true
-      const response = await axios.post('http://localhost:3001/api/contact/contact', formData);
+      const response = await axios.post('https://mental-health-backend-j16e.onrender.com/api/contact/contact', formData);
       console.log('Server response:', response.data);
       alert("Form Submitted")
       // Optionally handle success response, clear form, display success message, etc.
