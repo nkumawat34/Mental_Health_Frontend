@@ -11,7 +11,7 @@ export default function Login() {
         e.preventDefault() // Prevent default form submission
         
         try {
-          const response = await axios.post(`http://localhost:3001/api/auth/login`, {
+          const response = await axios.post(`https://mental-health-backend-j16e.onrender.com/api/auth/login`, {
             email: email,
             password: password
           });
