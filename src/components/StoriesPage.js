@@ -45,7 +45,7 @@ export default function StoriesPage() {
     fetchImageUrl();
     const fetchStories = async () => {
       try {
-        const response = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
+        const response = await axios.get("http://localhost:3001/api/stories/allstories");
         setStories(response.data);
         
         
@@ -53,7 +53,7 @@ export default function StoriesPage() {
        
         setLoading(false); // Set loading to false after data is fe/tched
 
-        const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/auth/getusers");
+        const response1 = await axios.get("http://localhost:3001/api/auth/getusers");
         const users=(response1.data)
         setUser(users.filter((user)=>user.email==email))
 
@@ -77,7 +77,7 @@ export default function StoriesPage() {
   const handleCommentClick = async (story) => {
     setShowComments(!showComments);
     setCommentToggle(story._id)
-    const remote_comments=await axios.get(`https://mental-health-backend-j16e.onrender.com/api/comments/${story._id}/comments`);
+    const remote_comments=await axios.get(`http://localhost:3001/api/comments/${story._id}/comments`);
     
     setComments(remote_comments.data)
   };
@@ -87,7 +87,7 @@ export default function StoriesPage() {
     //setNewComment(document.getElementById("c").value)
     //alert(value)
     try {
-      const response = await axios.post(`https://mental-health-backend-j16e.onrender.com/api/comments/story/${story._id}/comments`, {
+      const response = await axios.post(`http://localhost:3001/api/comments/story/${story._id}/comments`, {
         text: value, // Replace with actual author identifier
         commenter:email
       });
@@ -125,14 +125,19 @@ export default function StoriesPage() {
         likes: [] 
        }
 
+       const token=localStorage.getItem(email+'token');
+     
+       const response = await axios.post('http://localhost:3001/api/stories/create', story, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
        
-      const response=await axios.post("https://mental-health-backend-j16e.onrender.com/api/stories/create",story);
-       
-        const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
+        const response1 = await axios.get("http://localhost:3001/api/stories/allstories");
         setStories(response1.data);
        
       //console.log(response)
-       //alert("Post has succesfully posted")
+       alert("Post has succesfully posted")
     }
     catch
     {
@@ -147,13 +152,13 @@ export default function StoriesPage() {
     try{
       var response
       if (action === 'like') {
-        response=await axios.post(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like`,{author:email});
+        response=await axios.post(`http://localhost:3001/api/likes/${story._id}/like`,{author:email});
       } else {
-        response=await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like/${email}`,{author:email});
+        response=await axios.delete(`http://localhost:3001/api/likes/${story._id}/like/${email}`,{author:email});
       
       }
     
-      const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
+      const response1 = await axios.get("http://localhost:3001/api/stories/allstories");
      setStories(response1.data);
       
       // Optional: Update UI or state to reflect the like
@@ -164,10 +169,17 @@ export default function StoriesPage() {
   };
   const handleDelete = async (storyId) => {
     try {
+      const token=localStorage.getItem(email+'token');
+      
+    
       // Send DELETE request to backend API endpoint
-      const response = await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/stories/story/${storyId}`);
+      const response = await axios.delete(`http://localhost:3001/api/stories/story/${storyId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log(response.data); // Log success message or handle response as needed
-      const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
+      const response1 = await axios.get("http://localhost:3001/api/stories/allstories");
       setStories(response1.data);
     } catch (error) {
       console.error('Error deleting story:', error);
@@ -177,7 +189,7 @@ export default function StoriesPage() {
   const handleDeleteComment=async (storyId,commentId)=>{
     
     try {
-      const response = await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/comments/${storyId}/comments/${commentId}`);
+      const response = await axios.delete(`http://localhost:3001/api/comments/${storyId}/comments/${commentId}`);
       setComments(response.data.story.comments)
       console.log('Comment deleted:', response.data.story.comments); // Handle success response as needed
       // Refresh comments or update state accordingly
