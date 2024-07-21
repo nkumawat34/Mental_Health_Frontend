@@ -65,6 +65,7 @@ export default function StoriesPage() {
     };
 
     fetchStories();
+    SetToken(localStorage.getItem(email+'token'))
   }, []); //
   const handleProfile = () => {
     console.log('Profile clicked');
