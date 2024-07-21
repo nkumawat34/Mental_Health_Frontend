@@ -26,6 +26,7 @@ export default function StoriesPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [user,setUser]=useState({})
   const [liked, setLiked] = useState([]);
+  const [token,SetToken]=useState('')
   useEffect(() => {
     const fetchImageUrl = async () => {
       try {
@@ -90,6 +91,10 @@ export default function StoriesPage() {
       const response = await axios.post(`https://mental-health-backend-j16e.onrender.com/api/comments/story/${story._id}/comments`, {
         text: value, // Replace with actual author identifier
         commenter:email
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
     
       setComments(response.data.comments);
@@ -152,9 +157,17 @@ export default function StoriesPage() {
     try{
       var response
       if (action === 'like') {
-        response=await axios.post(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like`,{author:email});
+        response=await axios.post(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like`,{author:email},{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       } else {
-        response=await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like/${email}`,{author:email});
+        response=await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like/${email}`,{author:email},{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       
       }
     
@@ -189,7 +202,11 @@ export default function StoriesPage() {
   const handleDeleteComment=async (storyId,commentId)=>{
     
     try {
-      const response = await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/comments/${storyId}/comments/${commentId}`);
+      const response = await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/comments/${storyId}/comments/${commentId}`,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setComments(response.data.story.comments)
       console.log('Comment deleted:', response.data.story.comments); // Handle success response as needed
       // Refresh comments or update state accordingly
