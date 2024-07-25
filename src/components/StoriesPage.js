@@ -222,13 +222,10 @@ export default function StoriesPage() {
     };
     const userLikedStory = story.likes.includes(email);
     return (
-      <div className="max-w-screen-xl mx-auto mt-5 relative">
+      <div className="max-w-screen-xl mx-auto mt-5 ">
       {/* Upper Data Section */}
-      <div
-        className="bg-cover bg-center h-96 flex items-end relative"
-        style={{ backgroundImage: `url(${story.imageUrl})` }}
-      >
-        <div className="bg-cyan-700 text-white p-4 w-full absolute bottom-0 left-0 right-0">
+      
+        <div className="bg-cyan-700 text-white p-4 w-full " >
           <div className="flex justify-end">
             <button
               onClick={() => handleDelete(story._id)}
@@ -237,24 +234,24 @@ export default function StoriesPage() {
               &times;
             </button>
           </div>
-          <h2 className="text-4xl font-bold mb-2 text-center">{story.title}</h2>
-          <p className="text-lg">{story.content}</p>
-          <div className="flex items-center mt-4">
+          <h2 className="text-2xl md:text-4xl font-bold mb-2 text-center">{story.title}</h2>
+          <p className="text-md md:text-lg mb-4">{story.content}</p>
+          <div className="flex items-center mb-4">
             <div className="text-sm">
-              <p className="text-gray-100 leading-none">Author: {story.author}</p>
+              <p className="text-gray-100 text-sm md:text-lg leading-none">Author: {story.author}</p>
             </div>
           </div>
-          <div className="flex justify-center mt-4 space-x-4">
-          {userLikedStory ? (
+          <div className="flex justify-center space-x-4 text-sm md:text-lg">
+            {userLikedStory ? (
               <button
-              onClick={toggleLike}
+                onClick={toggleLike}
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
               >
                 Liked {story.likes.length}
               </button>
             ) : (
               <button
-              onClick={toggleLike}
+                onClick={toggleLike}
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 Like {story.likes.length}
@@ -262,13 +259,13 @@ export default function StoriesPage() {
             )}
             <button
               onClick={() => handleCommentClick(story)}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-sm md:text-lg"
             >
               Comment
             </button>
           </div>
         </div>
-      </div>
+     
 
       {/* Comments Section */}
       {showComments && story._id === commenttoggle && (
@@ -309,14 +306,14 @@ export default function StoriesPage() {
       <div class='flex flex-row justify-between'><div class=''> {imageUrl && (
         <div className="">
        
-          <img src={imageUrl} alt="Uploaded" className="w-full h-20 object-cover rounded-full mt-2" />
+          <img src={imageUrl} alt="Uploaded" className="w-full h-20 object-cover rounded-full m-2" />
         </div>
       )}</div>    <div className="relative inline-block text-left">
       <div>
         <button
           onClick={() => setIsOpen(!isOpen)}
           type="button"
-          className="mx-32 px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 mt-5"
+          className="mx-16 md:mx-32 px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500 mt-5"
           id="options-menu"
           aria-expanded="true"
           aria-haspopup="true"
@@ -326,7 +323,7 @@ export default function StoriesPage() {
       </div>
 
       {isOpen && (
-        <div className="origin-top-right absolute right-32 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="origin-top-right absolute right-16 md:right-32 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             <button
               onClick={()=> navigate("/profile",{state:{user:user}})}
