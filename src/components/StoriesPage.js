@@ -90,7 +90,7 @@ export default function StoriesPage() {
     //alert(value)
     try {
       const response = await axios.post(`https://mental-health-backend-j16e.onrender.com/api/comments/story/${story._id}/comments`, {
-        text: value, // Replace with actual author identifier
+        text: value, 
         commenter:email
       },{
         headers: {
@@ -139,10 +139,8 @@ export default function StoriesPage() {
         }
       });
        
-        const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
-        setStories(response1.data);
-       
-      //console.log(response)
+      setStories([...stories,story])
+      
        alert("Post has succesfully posted")
     }
     catch
@@ -151,36 +149,33 @@ export default function StoriesPage() {
     }
 
   }
-  const handleLike = async (index,story,action) => {
- 
-
-
-    try{
-      var response
+  const handleLike = async (index, story, action) => {
+    try {
+      let response;
+      const url = `https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like`;
+      const headers = {
+        Authorization: `Bearer ${token}`
+      };
+  
       if (action === 'like') {
-        response=await axios.post(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like`,{author:email},{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+        response = await axios.post(url, { author: email }, { headers });
+        // Add the like to the local story object
+        story.likes.push(email);
       } else {
-        response=await axios.delete(`https://mental-health-backend-j16e.onrender.com/api/likes/${story._id}/like/${email}`,{author:email},{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      
+        response = await axios.delete(`${url}/${email}`, { headers });
+        // Remove the like from the local story object
+        story.likes = story.likes.filter(like => like !== email);
       }
-    
-      const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
-     setStories(response1.data);
-      
-      // Optional: Update UI or state to reflect the like
-     
+  
+      // Update the specific story in the state
+      setStories(prevStories => 
+        prevStories.map(s => s._id === story._id ? story : s)
+      );
     } catch (error) {
-      console.error('Error liking the story:', error);
+      console.error('Error handling like:', error);
     }
   };
+  
   const handleDelete = async (storyId) => {
     try {
       const token=localStorage.getItem(email+'token');
@@ -193,8 +188,9 @@ export default function StoriesPage() {
         }
       });
       console.log(response.data); // Log success message or handle response as needed
-      const response1 = await axios.get("https://mental-health-backend-j16e.onrender.com/api/stories/allstories");
-      setStories(response1.data);
+      //setStories
+      const stories1=stories.filter(s=>s._id!=storyId)
+     setStories(stories1)
     } catch (error) {
       console.error('Error deleting story:', error);
       // Handle error scenario, show error message, etc.
@@ -370,12 +366,13 @@ export default function StoriesPage() {
 <button class='mx-[45%] mt-5 p-4 bg-red-300 rounded-full ' type='submit'>Post</button>
 </form>
 <img src={Mental} style={{height:"60vh",width:"30vw"}} class=' invisible lg:visible absolute bottom-[50vh] top-[10vh] left-[70%] mx-4'/>
-<img src="/static/media/person_head.d7e360ab4d76f35987a1.jpg" class=" invisible  lg:visible absolute bottom-[50vh] left-[4vh] right-[70%] mx-4" style="height: 30vh; width: 250px;">
+<img src={PersonHead} class=" invisible  lg:visible absolute bottom-[40vh] left-[4vh] right-[70%] mx-4" style={{height: "30vh", width: "250px"}}/>
 <div>
       {stories.map((story,index) => (
         <FullWidthStoryCard key={story.id} index={index} story={story} />
       ))}
     </div>
+
     </div>
   )
 }
