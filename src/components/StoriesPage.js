@@ -370,7 +370,7 @@ export default function StoriesPage() {
 <button class='mx-[45%] mt-5 p-4 bg-red-300 rounded-full ' type='submit'>Post</button>
 </form>
 <img src={Mental} style={{height:"60vh",width:"30vw"}} class=' invisible lg:visible absolute bottom-[50vh] top-[10vh] left-[70%] mx-4'/>
-<img src={PersonHead} style={{height:"40vh",width:"300px"}} class=' invisible  lg:visible absolute bottom-[60vh] top-[8vh] left-[4vh] right-[70%] mx-4'/>
+<img src="/static/media/person_head.d7e360ab4d76f35987a1.jpg" class=" invisible  lg:visible absolute bottom-[50vh] left-[4vh] right-[70%] mx-4" style="height: 30vh; width: 250px;">
 <div>
       {stories.map((story,index) => (
         <FullWidthStoryCard key={story.id} index={index} story={story} />
