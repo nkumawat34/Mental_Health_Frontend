@@ -369,8 +369,8 @@ export default function StoriesPage() {
   <textarea id="message" rows="10" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write Your Post" onChange={(e)=>setContent(e.target.value)}></textarea>
 <button class='mx-[45%] mt-5 p-4 bg-red-300 rounded-full ' type='submit'>Post</button>
 </form>
-<img src={Mental} style={{height:"60vh",width:"30vw"}} class=' invisible lg:visible absolute bottom-32 top-64 left-[70%] mx-4'/>
-<img src={PersonHead} style={{height:"40vh",width:"300px"}} class=' invisible  lg:visible absolute bottom-48 left-4 right-[70%] mx-4'/>
+<img src={Mental} style={{height:"60vh",width:"30vw"}} class=' invisible lg:visible absolute bottom-[30vh] top-64 left-[70%] mx-4'/>
+<img src={PersonHead} style={{height:"40vh",width:"300px"}} class=' invisible  lg:visible absolute bottom-[20vh] left-4 right-[70%] mx-4'/>
 <div>
       {stories.map((story,index) => (
         <FullWidthStoryCard key={story.id} index={index} story={story} />
