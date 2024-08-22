@@ -226,14 +226,14 @@ export default function StoriesPage() {
       {/* Upper Data Section */}
       
         <div className="bg-cyan-700 text-white p-4 w-full " >
-          <div className="flex justify-end">
+          {email==story.author?<div className="flex justify-end">
             <button
               onClick={() => handleDelete(story._id)}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
             >
               &times;
             </button>
-          </div>
+          </div>:""}
           <h2 className="text-2xl md:text-4xl font-bold mb-2 text-center">{story.title}</h2>
           <p className="text-md md:text-lg mb-4">{story.content}</p>
           <div className="flex items-center mb-4">
