@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom'
+import { RotatingLines } from "react-loader-spinner";
 export default function Login() {
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const navigate=useNavigate()
-
+    const [loading,setLoading]=useState(false)
     const Login=async (e)=>{
 
         e.preventDefault() // Prevent default form submission
-        
+        setLoading(true)
         try {
           const response = await axios.post(`https://mental-health-backend-j16e.onrender.com/api/auth/login`, {
             email: email,
@@ -23,11 +24,15 @@ export default function Login() {
           // Handle successful login response
           console.log('Login successful:', response.data);
           navigate("/stories",{state:{email:email}})
+
+          
           // You can handle further actions like redirecting to another page or updating state
         } catch (error) {
+          alert("User authentication failed")
           // Handle error
           console.error('Login error:', error);
         }
+        setLoading(false)
       };
 
 
@@ -96,6 +101,13 @@ export default function Login() {
 
           
         </div>
+       {loading?<div class='flex justify-center mt-5'><RotatingLines
+      strokeColor="grey"
+      strokeWidth="5"
+      animationDuration="0.75"
+      width="96"
+      visible={true}
+    /></div>:""}
       </div>
   )
 }
